@@ -22,4 +22,11 @@ app.listen(8080, () => {
     console.log("Listening to port successfully!");
 });
 
+
+
+
+
+
+
+
 //#000000,#92DCE5,#EEE5E9,#7C7C7C,#D64933...this should be the color palette and make landing page for both dark and light theme with a cool animation toggle with the given color scheme only. 
