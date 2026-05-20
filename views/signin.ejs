@@ -898,6 +898,7 @@
       </div>
 
       <!-- ── SIGN IN PANEL ── -->
+      <form action="/signin" method="post" class="signin-form">
       <div class="form-panel" id="panel-signin">
         <div class="form-heading">
           <div class="form-heading-main">Return, Warrior.</div>
@@ -938,7 +939,7 @@
         <div class="field-group">
           <label class="field-label" for="si-email">War Dispatch Address</label>
           <div class="field-wrap">
-            <input class="field-input" id="si-email" type="email" placeholder="commander@legion.io" autocomplete="email" />
+            <input class="field-input" id="si-email" name="username" type="text" placeholder="commander@legion.io" required />
             <span class="field-icon">✉</span>
           </div>
         </div>
@@ -949,7 +950,7 @@
             <a href="#" class="forgot-link">Forgot cipher?</a>
           </label>
           <div class="field-wrap">
-            <input class="field-input" id="si-pass" type="password" placeholder="••••••••••••" autocomplete="current-password" oninput="updateStrength(this,'si-strength')" />
+            <input class="field-input" id="si-pass" name="password" type="password" placeholder="••••••••••••" required />
             <span class="field-icon">🔑</span>
           </div>
           <div class="strength-bar"><div class="strength-bar-fill" id="si-strength"></div></div>
@@ -961,7 +962,7 @@
           <span class="check-label">Hold my post — remain signed in across sessions</span>
         </label>
 
-        <button class="submit-btn" onclick="handleSignIn()">
+        <button type="submit" class="submit-btn">
           <span>⚔ &nbsp;Reclaim My Post</span>
         </button>
 
@@ -969,8 +970,10 @@
           New to the battleground? <a href="#" onclick="switchTab('signup');return false;">Enlist as a Psilos →</a>
         </div>
       </div>
+      </form>
 
       <!-- ── SIGN UP PANEL ── -->
+    <form action="/signup" method="post" class="needs-validation" novalidate>
       <div class="form-panel hidden" id="panel-signup">
         <div class="form-heading">
           <div class="form-heading-main">Enlist, Psilos.</div>
@@ -1006,14 +1009,14 @@
           <div class="field-group">
             <label class="field-label" for="su-name">Given Name</label>
             <div class="field-wrap">
-              <input class="field-input" id="su-name" type="text" placeholder="Leonidas" autocomplete="given-name"/>
+              <input class="field-input" id="su-name" name="name" type="text" placeholder="Leonidas" autocomplete="given-name"/>
               <span class="field-icon">👤</span>
             </div>
           </div>
           <div class="field-group">
             <label class="field-label" for="su-handle">Battle Handle</label>
             <div class="field-wrap">
-              <input class="field-input" id="su-handle" type="text" placeholder="@phalanx" autocomplete="username"/>
+              <input class="field-input" id="su-handle" name="username" type="text" placeholder="@phalanx" autocomplete="username" required/>
               <span class="field-icon">⚡</span>
             </div>
           </div>
@@ -1022,7 +1025,7 @@
         <div class="field-group">
           <label class="field-label" for="su-email">War Dispatch Address</label>
           <div class="field-wrap">
-            <input class="field-input" id="su-email" type="email" placeholder="commander@legion.io" autocomplete="email"/>
+            <input class="field-input" id="su-email" name="email" type="email" placeholder="commander@legion.io" autocomplete="email" required/>
             <span class="field-icon">✉</span>
           </div>
         </div>
@@ -1030,7 +1033,7 @@
         <div class="field-group">
           <label class="field-label" for="su-pass">Secret Cipher</label>
           <div class="field-wrap">
-            <input class="field-input" id="su-pass" type="password" placeholder="Forge a strong cipher…" autocomplete="new-password" oninput="updateStrength(this,'su-strength')"/>
+            <input class="field-input" id="su-pass" name="password" type="password" placeholder="Forge a strong cipher…" autocomplete="new-password" required/>
             <span class="field-icon">🔑</span>
           </div>
           <div class="strength-bar" style="display:block;margin-top:.5rem;"><div class="strength-bar-fill" id="su-strength"></div></div>
@@ -1053,12 +1056,12 @@
         </div>
 
         <label class="check-row">
-          <input type="checkbox" id="su-terms"/>
+          <input type="checkbox" id="su-terms" required/>
           <div class="check-box"></div>
           <span class="check-label">I swear by the Builder's Oath — to build publicly, review honestly, and serve the legion.</span>
         </label>
 
-        <button class="submit-btn" onclick="handleSignUp()">
+        <button type="submit" class="submit-btn">
           <span>🛡 &nbsp;Enlist in the Legion</span>
         </button>
 
@@ -1067,6 +1070,7 @@
           Already a warrior? <a href="#" onclick="switchTab('signin');return false;">← Return to the Gates</a>
         </div>
       </div>
+      </form>
 
     </div>
   </div>
