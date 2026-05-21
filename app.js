@@ -24,17 +24,8 @@ async function main() {
 };
 
 
-
-//Middlewares
-app.set("view engine","ejs");
-app.set("views", path.join(__dirname,"views"));
-app.use(express.urlencoded({extended : true}));
-app.engine("ejs",ejsMate);
-app.use(express.static(path.join(__dirname,"/public")));
-app.use(methodOverride("_method"));
-
 // MongoStore Options
-const MongoStore = require("connect-mongo");
+const MongoStore = require("connect-mongo").default;
 
 const store = new MongoStore({
     mongoUrl: "mongodb://localhost:27017/trove",
@@ -44,12 +35,31 @@ store.on("error", (err)=>{
     console.log("Error in MONGO SESSION STORE!",err);
 });
 
-app.use(require("express-session")({
+//Session Options
+const sessionOptions = {
+    store,
     secret: "ThisIsASecret",
     resave: false,
     saveUninitialized: false,
-    store: store
-}));
+    cookie: {
+        expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+        httpOnly: true,  //To avoid cross-site scripting attacks
+    }
+};
+
+
+//Middlewares
+app.set("view engine","ejs");
+app.set("views", path.join(__dirname,"views"));
+app.use(express.urlencoded({extended : true}));
+app.engine("ejs",ejsMate);
+app.use(express.static(path.join(__dirname,"/public")));
+app.use(methodOverride("_method"));
+
+
+//Session middlewares
+app.use(session(sessionOptions));
 
 app.use(flash());
 
@@ -66,7 +76,7 @@ const isLoggedIn = (req, res, next) => {
     if (req.isAuthenticated()) {
         return next();
     }
-    req.flash("error", "You must be signed in to access this page");
+    // req.flash("error", "You must be signed in to access this page");
     res.redirect("/signin");
 };
 
@@ -94,11 +104,11 @@ app.post("/signup", async (req,res) =>{
             if(err){
                 return res.redirect("/signin");
             }
-            req.flash("success","User registered Successfully");
+            // req.flash("success","User registered Successfully");
             res.redirect("/home");
         });  
     }catch(e){
-        req.flash("error",e.message);
+        // req.flash("error",e.message);
         res.redirect("/signin");
     }
 });

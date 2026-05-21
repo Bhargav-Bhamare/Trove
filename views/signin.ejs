@@ -165,16 +165,211 @@
     .crest-svg {
       width: 280px;
       height: auto;
-      opacity: .18;
-      animation: crestFloat 8s ease-in-out infinite;
-      filter: drop-shadow(0 0 30px var(--accent));
+      opacity: .25;
+      animation: crestFloat 8s ease-in-out infinite, crestRotate 20s linear infinite, crestPulse 4s ease-in-out infinite;
+      filter: drop-shadow(0 0 30px var(--accent)) drop-shadow(0 0 60px var(--accent));
+      transform-style: preserve-3d;
+      perspective: 1000px;
     }
-    [data-theme="light"] .crest-svg { opacity: .1; }
+    [data-theme="light"] .crest-svg { 
+      opacity: .55;
+      filter: drop-shadow(0 0 25px rgba(26,122,133,.6)) drop-shadow(0 0 50px rgba(26,122,133,.4));
+    }
 
     @keyframes crestFloat {
       0%, 100% { transform: translateY(0px) rotate(0deg); }
       33%       { transform: translateY(-10px) rotate(.5deg); }
       66%       { transform: translateY(5px) rotate(-.3deg); }
+    }
+
+    @keyframes crestRotate {
+      0%   { transform: translateY(0px) rotateZ(0deg); }
+      100% { transform: translateY(0px) rotateZ(360deg); }
+    }
+
+    @keyframes crestPulse {
+      0%, 100% { filter: drop-shadow(0 0 30px var(--accent)) drop-shadow(0 0 60px var(--accent)); }
+      50%      { filter: drop-shadow(0 0 50px var(--accent)) drop-shadow(0 0 90px var(--accent)); }
+    }
+    /* This Controls the position */
+    @keyframes orbiterSpin {
+      0%   { transform: rotate(0deg) translateX(70px) rotate(0deg); opacity: .6; }
+      25%  { opacity: .9; }
+      50%  { opacity: .6; }
+      75%  { opacity: .9; }
+      100% { transform: rotate(360deg) translateX(70px) rotate(-360deg); opacity: .6; }
+    }
+
+    @keyframes energyRing {
+      0%   { transform: scale(0.8) rotate(0deg); opacity: .3; }
+      50%  { transform: scale(1.2) rotate(180deg); opacity: .6; }
+      100% { transform: scale(0.8) rotate(360deg); opacity: .3; }
+    }
+
+    /* Energy orbiting elements */
+    .crest-energy {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      pointer-events: none;
+      transform-origin: 0 0;
+    }
+
+    .crest-energy.e1 {
+      background: var(--accent);
+      animation: orbiterSpin 12s linear infinite;
+      box-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent);
+    }
+
+    .crest-energy.e2 {
+      background: var(--accent2);
+      animation: orbiterSpin 12s linear infinite reverse;
+      box-shadow: 0 0 10px var(--accent2), 0 0 20px var(--accent2);
+      animation-delay: 4s;
+    }
+
+    .crest-energy.e3 {
+      background: var(--accent);
+      width: 8px;
+      height: 8px;
+      animation: orbiterSpin 12s linear infinite;
+      animation-delay: 8s;
+      box-shadow: 0 0 8px var(--accent);
+    }
+
+    [data-theme="light"] .crest-energy.e1 {
+      background: rgba(26,122,133,.9);
+      box-shadow: 0 0 12px rgba(26,122,133,1), 0 0 24px rgba(26,122,133,.7);
+    }
+
+    [data-theme="light"] .crest-energy.e2 {
+      background: rgba(214,73,51,.9);
+      box-shadow: 0 0 12px rgba(214,73,51,1), 0 0 24px rgba(214,73,51,.7);
+    }
+
+    [data-theme="light"] .crest-energy.e3 {
+      background: rgba(26,122,133,.9);
+      box-shadow: 0 0 10px rgba(26,122,133,.9);
+    }
+
+    /* Dynamic energy ring around crest */
+    .crest-ring {
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      border: 2px solid var(--accent);
+      border-radius: 50%;
+      top: 2%;
+      left: 5%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      opacity: .2;
+      animation: energyRing 6s ease-in-out infinite;
+    }
+
+    [data-theme="light"] .crest-ring {
+      border-color: rgba(26,122,133,.7);
+      opacity: .35;
+    }
+
+    /* Shield inner glow */
+    .crest-glow {
+      position: absolute;
+      width: 280px;
+      height: 280px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(ellipse at center, var(--accent), transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+      animation: glowPulse 4s ease-in-out infinite;
+      opacity: .15;
+      filter: blur(10px);
+    }
+
+    [data-theme="light"] .crest-glow {
+      background: radial-gradient(ellipse at center, rgba(26,122,133,.6), transparent 70%);
+      opacity: .25;
+    }
+
+    @keyframes glowPulse {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: .15; }
+      50%      { transform: translate(-50%, -50%) scale(1.15); opacity: .25; }
+    }
+
+    /* SVG element animations */
+    .shield-stroke {
+      animation: strokeGlow 3s ease-in-out infinite;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .spear-line {
+      animation: spearGlow 2.5s ease-in-out infinite;
+    }
+
+    .spear-tip {
+      animation: tipPulse 2s ease-in-out infinite;
+    }
+
+    .crown-elem {
+      animation: crownSpin 8s linear infinite;
+      transform-origin: 150px 42px;
+    }
+
+    .laurel-elem {
+      animation: laurelWave 4s ease-in-out infinite;
+    }
+
+    .shield-text {
+      animation: textGlow 3.5s ease-in-out infinite;
+    }
+
+    .star {
+      animation: starTwinkle 3s ease-in-out infinite;
+    }
+
+    .star-center {
+      animation: starTwinkle 3s ease-in-out infinite 0.5s;
+    }
+
+    @keyframes strokeGlow {
+      0%, 100% { stroke-width: 1.5; opacity: .8; }
+      50%      { stroke-width: 2; opacity: 1; }
+    }
+
+    @keyframes spearGlow {
+      0%, 100% { opacity: .6; stroke-width: 1; }
+      50%      { opacity: 1; stroke-width: 1.3; }
+    }
+
+    @keyframes tipPulse {
+      0%, 100% { opacity: .7; transform: scale(1); }
+      50%      { opacity: 1; transform: scale(1.2); }
+    }
+
+    @keyframes crownSpin {
+      0%   { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes laurelWave {
+      0%, 100% { opacity: .5; }
+      50%      { opacity: .8; }
+    }
+
+    @keyframes textGlow {
+      0%, 100% { opacity: .9; }
+      50%      { opacity: 1; }
+    }
+
+    @keyframes starTwinkle {
+      0%, 100% { opacity: .4; r: 2px; }
+      50%      { opacity: .9; r: 3.5px; }
     }
 
     .crest-title {
@@ -799,40 +994,45 @@
 
     <!-- Crest SVG -->
     <div class="crest-wrap">
+      <div class="crest-ring"></div>
+      <div class="crest-glow"></div>
+      <div class="crest-energy e1"></div>
+      <div class="crest-energy e2"></div>
+      <div class="crest-energy e3"></div>
       <svg class="crest-svg" viewBox="0 0 300 340" fill="none" xmlns="http://www.w3.org/2000/svg">
         <!-- Shield base -->
         <path d="M150 10 L280 60 L280 190 Q280 280 150 330 Q20 280 20 190 L20 60 Z"
               fill="none" stroke="currentColor" stroke-width="1.5" opacity=".8"
-              style="color:var(--accent)"/>
+              style="color:var(--accent)" class="shield-stroke"/>
         <!-- Inner shield -->
         <path d="M150 30 L260 72 L260 188 Q260 265 150 308 Q40 265 40 188 L40 72 Z"
               fill="none" stroke="currentColor" stroke-width=".8" opacity=".4"
               style="color:var(--accent)"/>
         <!-- Laurel left -->
-        <ellipse cx="85" cy="130" rx="10" ry="18" fill="none" stroke="currentColor" stroke-width=".7" opacity=".5" transform="rotate(-35 85 130)" style="color:var(--accent)"/>
-        <ellipse cx="72" cy="155" rx="10" ry="18" fill="none" stroke="currentColor" stroke-width=".7" opacity=".5" transform="rotate(-25 72 155)" style="color:var(--accent)"/>
-        <ellipse cx="65" cy="183" rx="10" ry="18" fill="none" stroke="currentColor" stroke-width=".7" opacity=".5" transform="rotate(-10 65 183)" style="color:var(--accent)"/>
+        <ellipse cx="85" cy="130" rx="10" ry="18" fill="none" stroke="currentColor" stroke-width=".7" opacity=".5" transform="rotate(-35 85 130)" style="color:var(--accent)" class="laurel-elem"/>
+        <ellipse cx="72" cy="155" rx="10" ry="18" fill="none" stroke="currentColor" stroke-width=".7" opacity=".5" transform="rotate(-25 72 155)" style="color:var(--accent)" class="laurel-elem"/>
+        <ellipse cx="65" cy="183" rx="10" ry="18" fill="none" stroke="currentColor" stroke-width=".7" opacity=".5" transform="rotate(-10 65 183)" style="color:var(--accent)" class="laurel-elem"/>
         <!-- Laurel right -->
-        <ellipse cx="215" cy="130" rx="10" ry="18" fill="none" stroke="currentColor" stroke-width=".7" opacity=".5" transform="rotate(35 215 130)" style="color:var(--accent)"/>
-        <ellipse cx="228" cy="155" rx="10" ry="18" fill="none" stroke="currentColor" stroke-width=".7" opacity=".5" transform="rotate(25 228 155)" style="color:var(--accent)"/>
-        <ellipse cx="235" cy="183" rx="10" ry="18" fill="none" stroke="currentColor" stroke-width=".7" opacity=".5" transform="rotate(10 235 183)" style="color:var(--accent)"/>
+        <ellipse cx="215" cy="130" rx="10" ry="18" fill="none" stroke="currentColor" stroke-width=".7" opacity=".5" transform="rotate(35 215 130)" style="color:var(--accent)" class="laurel-elem"/>
+        <ellipse cx="228" cy="155" rx="10" ry="18" fill="none" stroke="currentColor" stroke-width=".7" opacity=".5" transform="rotate(25 228 155)" style="color:var(--accent)" class="laurel-elem"/>
+        <ellipse cx="235" cy="183" rx="10" ry="18" fill="none" stroke="currentColor" stroke-width=".7" opacity=".5" transform="rotate(10 235 183)" style="color:var(--accent)" class="laurel-elem"/>
         <!-- Spear -->
-        <line x1="150" y1="60" x2="150" y2="270" stroke="currentColor" stroke-width="1" opacity=".6" style="color:var(--accent)"/>
-        <polygon points="150,38 142,68 158,68" fill="currentColor" opacity=".7" style="color:var(--accent)"/>
+        <line x1="150" y1="60" x2="150" y2="270" stroke="currentColor" stroke-width="1" opacity=".6" style="color:var(--accent)" class="spear-line"/>
+        <polygon points="150,38 142,68 158,68" fill="currentColor" opacity=".7" style="color:var(--accent)" class="spear-tip"/>
         <!-- Crossguard -->
         <line x1="115" y1="145" x2="185" y2="145" stroke="currentColor" stroke-width="1.2" opacity=".6" style="color:var(--accent)"/>
         <!-- Crown top -->
         <polygon points="110,58 122,40 134,55 150,30 166,55 178,40 190,58"
                  fill="none" stroke="currentColor" stroke-width="1" opacity=".6"
-                 style="color:var(--accent2)"/>
+                 style="color:var(--accent2)" class="crown-elem"/>
         <!-- TROVE text inside -->
         <text x="150" y="230" text-anchor="middle" font-family="Bebas Neue, sans-serif"
               font-size="28" letter-spacing="8" fill="currentColor" opacity=".9"
-              style="color:var(--accent)">TROVE</text>
+              style="color:var(--accent)" class="shield-text">TROVE</text>
         <!-- Stars -->
-        <circle cx="100" cy="100" r="2" fill="currentColor" opacity=".4" style="color:var(--accent)"/>
-        <circle cx="200" cy="100" r="2" fill="currentColor" opacity=".4" style="color:var(--accent)"/>
-        <circle cx="150" cy="88"  r="2.5" fill="currentColor" opacity=".6" style="color:var(--accent2)"/>
+        <circle cx="100" cy="100" r="2" fill="currentColor" opacity=".4" style="color:var(--accent)" class="star"/>
+        <circle cx="200" cy="100" r="2" fill="currentColor" opacity=".4" style="color:var(--accent)" class="star"/>
+        <circle cx="150" cy="88"  r="2.5" fill="currentColor" opacity=".6" style="color:var(--accent2)" class="star-center"/>
       </svg>
       <div class="crest-title">Proof of Work · Builder Ecosystem</div>
     </div>
