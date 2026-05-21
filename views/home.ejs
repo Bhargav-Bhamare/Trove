@@ -1452,7 +1452,7 @@ body::before{
       🔔<div class="notif-dot"></div>
     </div>
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme"></button>
-    <div class="topbar-avatar" onclick="navigate('profile')">AR</div>
+    <div class="topbar-avatar" onclick="navigate('profile')"><%= user.username.charAt(0).toUpperCase() %></div>
   </div>
 </header>
 
@@ -1559,7 +1559,7 @@ body::before{
     <!-- Compose -->
     <div class="compose-box">
       <div class="compose-top">
-        <div class="compose-avatar">AR</div>
+        <div class="compose-avatar"><%= user.username.charAt(0).toUpperCase() %></div>
         <textarea class="compose-input" placeholder="What did you build today, Lochagos?&#10;Share your proof of work..."></textarea>
       </div>
       <div class="compose-actions">
@@ -1913,7 +1913,7 @@ body::before{
       <div class="profile-top">
         <div>
           <div class="profile-avatar-wrap">
-            <div class="profile-avatar">BB</div>
+            <div class="profile-avatar"><%= user.username.charAt(0).toUpperCase() %><%= user.username.length > 1 ? user.username.charAt(1).toUpperCase() : '' %></div>
             <div class="profile-rank-icon">⚔️</div>
           </div>
           <div class="profile-info">
