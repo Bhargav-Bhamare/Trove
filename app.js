@@ -241,4 +241,7 @@ app.listen(8080, () => {
 
 
 
+
+
+
 //#000000,#92DCE5,#EEE5E9,#7C7C7C,#D64933...this should be the color palette 
